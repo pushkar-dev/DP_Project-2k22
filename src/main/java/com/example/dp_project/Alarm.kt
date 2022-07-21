@@ -11,7 +11,7 @@ class Alarm(private var ctx: Context, private val filename: String = "alarmDump.
     var timeTable: Array<FloatArray> =Array(7){FloatArray(3)}
     private val dayOfWeek: Array<String> =arrayOf("mon","tue","wed","thu","fri","sat","sun")
 
-    fun fetch():Array<FloatArray> // fetch data from file dump
+    private fun fetch():Array<FloatArray> // fetch data from file dump
     {
         val f= File(this.ctx.filesDir, this.filename)
         val s:String=f.readText()
