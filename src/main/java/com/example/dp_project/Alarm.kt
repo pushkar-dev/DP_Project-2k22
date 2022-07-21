@@ -8,21 +8,43 @@ import java.io.*
 
 class Alarm(private var ctx: Context, private val filename: String = "alarmDump.txt") {
     private val clock:AlarmClock = AlarmClock()
-    private var timeTable: Array<FloatArray> =Array(7){FloatArray(3)}
+    var timeTable: Array<FloatArray> =Array(7){FloatArray(3)}
     private val dayOfWeek: Array<String> =arrayOf("mon","tue","wed","thu","fri","sat","sun")
-    init {
-        arrayOf(
-            floatArrayOf(0f,0f,0f),
-            floatArrayOf(0f,0f,0f),
-            floatArrayOf(0f,0f,0f),
-            floatArrayOf(0f,0f,0f),
-            floatArrayOf(0f,0f,0f),
-            floatArrayOf(0f,0f,0f),
-            floatArrayOf(0f,0f,0f),
-        ).also { timeTable = it }
+
+    fun fetch():Array<FloatArray> // fetch data from file dump
+    {
+        val f= File(this.ctx.filesDir, this.filename)
+        val s:String=f.readText()
+        val res:Array<FloatArray> =Array(7){FloatArray(3)}
+        for((i, line) in s.trim().split("\n").withIndex())
+        {
+            for((j,istr) in line.trim().split(" ").withIndex())
+            {
+                res[i][j]=istr.toFloat()
+                //println(istr.toFloat())
+            }
+        }
+        return res
     }
 
-    fun dump(tt: Array<FloatArray>) // dump input data to file
+    init {
+        val f = File(this.ctx.filesDir, this.filename)
+        if (f.exists()) {
+            fetch().also { timeTable = it }
+        } else {
+            arrayOf(
+                floatArrayOf(0f, 0f, 0f),
+                floatArrayOf(0f, 0f, 0f),
+                floatArrayOf(0f, 0f, 0f),
+                floatArrayOf(0f, 0f, 0f),
+                floatArrayOf(0f, 0f, 0f),
+                floatArrayOf(0f, 0f, 0f),
+                floatArrayOf(0f, 0f, 0f),
+            ).also { timeTable = it }
+        }
+    }
+
+    fun dump() // dump input data to file
     {
         val f= File(this.ctx.filesDir,this.filename)
         var s=""
@@ -30,24 +52,13 @@ class Alarm(private var ctx: Context, private val filename: String = "alarmDump.
         {
             for(j in 0..2)
             {
-                s+=tt[i][j].toString()+" "
+                s+=timeTable[i][j].toString()+" "
             }
             s+="\n"
         }
         f.writeText(s)
     }
-    fun fetch() // fetch data from file dump
-    {
-        val f= File(this.ctx.filesDir, this.filename)
-        val s:String=f.readText()
-        for((i, line) in s.trim().split("\n").withIndex())
-        {
-            for((j,istr) in line.split(" ").withIndex())
-            {
-                this.timeTable[i][j]=istr.toFloat()
-            }
-        }
-    }
+
 
     fun sync() // posts same data to esp32 web server
     {

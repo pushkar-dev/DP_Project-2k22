@@ -18,7 +18,6 @@
         <item>Morning</item>
         <item>Afternoon</item>
         <item>Evening</item>
-        <item>Night</item>
     </string-array>
 
     <string name="button">Button</string>
@@ -46,4 +45,6 @@
     <string name="daySelectText">Select day</string>
     <string name="slotSelectText">Select slot</string>
     <string name="pick_time">Pick Time</string>
+    <string name="wrongSelectAlert">Wrong Time Selected</string>
+    <string name="wrongSelectMsg">Kindly Select Correct Time</string>
 </resources>

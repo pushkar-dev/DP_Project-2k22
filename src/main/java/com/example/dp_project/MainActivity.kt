@@ -1,5 +1,6 @@
 package com.example.dp_project
 
+import android.app.AlertDialog
 import android.app.Dialog
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -16,11 +17,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-//        var day:String?
-//        var Slot:String?
-//        var hour:Int?
-//        var minute:Int?
 
 
 
@@ -40,6 +36,9 @@ class MainActivity : AppCompatActivity() {
 
         val alarmSetter= Alarm(this.applicationContext)
 
+         val wrongAlarmAlert=AlertDialog.Builder(this)
+        wrongAlarmAlert.setTitle(R.string.wrongSelectAlert)
+        wrongAlarmAlert.setMessage(R.string.wrongSelectMsg)
 
         // set view for show time table
         val showBtn = findViewById<View>(R.id.showbtn) as Button
@@ -60,8 +59,6 @@ class MainActivity : AppCompatActivity() {
             topViewTime.show()
         }
 
-
-
         //sync btn
         val syncBtn=findViewById<View>(R.id.syncBtn) as Button
         syncBtn.setOnClickListener()
@@ -71,13 +68,31 @@ class MainActivity : AppCompatActivity() {
 
         //set btn
         val setBtn=findViewById<View>(R.id.setBtn) as Button
-        setBtn.setOnClickListener()
+        setBtn.setOnClickListener() //tested->OK
         {
             val t=topViewTime.findViewById<View>(R.id.timePicker1) as TimePicker
             println("Hour=${t.hour}")
             println("Minute=${t.minute}")
+            val i= adapter1.getPosition(daySelect.selectedItem as String)
+            val j= adapter2.getPosition(slotSelect.selectedItem as String)
+            val value:Float= (t.hour*100f+t.minute)
+            if(i>0 && j>0)
+            {
+                alarmSetter.timeTable[i-1][j-1]=value
+            }
+            else
+            {
+                val alertDialog=wrongAlarmAlert.create()
+                alertDialog.show()
+            }
             println("slot=${slotSelect.selectedItem}")
-            println("day=${daySelect.selectedItem}")
+            println("day=${daySelect.selectedItem}") // for debugging purposes only
+            println("i=${i}, j=${j}, value=${value}")
+            alarmSetter.dump()
+//            for (i in alarmSetter.fetch())
+//            {
+//                for( j in i){ println(j)}
+//            }
 
         }
     }
