@@ -47,4 +47,19 @@
     <string name="pick_time">Pick Time</string>
     <string name="wrongSelectAlert">Wrong Time Selected</string>
     <string name="wrongSelectMsg">Kindly Select Correct Time</string>
+    <string name="time_table">Time Table</string>
+    <string name="day">Day</string>
+    <string name="morning">Morning</string>
+    <string name="afternoon">Afternoon</string>
+    <string name="evening">Evening</string>
+    <string name="mon">Mon</string>
+    <string name="tue">Tue</string>
+    <string name="wed">Wed</string>
+    <string name="thu">Thu</string>
+    <string name="fri">Fri</string>
+    <string name="sat">Sat</string>
+    <string name="sun">Sun</string>
+    <string name="_8_00_am">8:00 AM</string>
+    <string name="_2_00_pm">2:00 PM</string>
+    <string name="_7_00_pm">7:00 PM</string>
 </resources>
