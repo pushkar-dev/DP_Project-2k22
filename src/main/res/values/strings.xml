@@ -62,4 +62,7 @@
     <string name="_8_00_am">8:00 AM</string>
     <string name="_2_00_pm">2:00 PM</string>
     <string name="_7_00_pm">7:00 PM</string>
+    <string name="disconnected">Disconnected</string>
+    <string name="connected">Connected</string>
+    <string name="device">Device :</string>
 </resources>

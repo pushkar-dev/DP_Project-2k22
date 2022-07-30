@@ -5,8 +5,7 @@ import android.app.Dialog
 import android.content.Context
 import android.os.Build
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.TimePicker
+import android.widget.*
 import androidx.annotation.RequiresApi
 
 class Adapters(appCtx:Context, ctx:Context) {
@@ -18,9 +17,7 @@ class Adapters(appCtx:Context, ctx:Context) {
         this.ctx=ctx
     }
 
-    //fun getAlarmSetter():Alarm{return alarmSetter}
-
-    fun getDayAdapter():ArrayAdapter<CharSequence>
+    fun getDayAdapter():ArrayAdapter<CharSequence> //returns adapter for day spinner
     {
         val adapter = ArrayAdapter.createFromResource(
             ctx,
@@ -30,7 +27,8 @@ class Adapters(appCtx:Context, ctx:Context) {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         return adapter
     }
-    fun getSlotAdapter():ArrayAdapter<CharSequence> {
+    fun getSlotAdapter():ArrayAdapter<CharSequence> //returns adapter for slot spinner
+    {
         val adapter = ArrayAdapter.createFromResource(
             ctx,
             R.array.Slot,
@@ -39,7 +37,7 @@ class Adapters(appCtx:Context, ctx:Context) {
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_item)
         return adapter
     }
-    private fun wrongSelectAlertBuilder():AlertDialog.Builder
+    private fun wrongSelectAlertBuilder():AlertDialog.Builder //returns alert builder for wrong time selection
     {
         val wrongAlarmAlert=AlertDialog.Builder(ctx)
         wrongAlarmAlert.setTitle(R.string.wrongSelectAlert)
@@ -47,15 +45,26 @@ class Adapters(appCtx:Context, ctx:Context) {
         return wrongAlarmAlert
     }
 
-    fun buildShowOnclick()
+    fun buildShowOnclick() //event handler for show button
     {
-        val dialog = Dialog(ctx)
-        dialog.setContentView(R.layout.dialog_tt)
-        dialog.show()
+        val tableView = Dialog(ctx)
+        tableView.setContentView(R.layout.dialog_tt)
+        val table=tableView.findViewById<View>(R.id.ttView) as TableLayout
+        for(i in 2..8)
+        {
+            val row=table.getChildAt(i) as TableRow
+            for(j in 1..3)
+            {
+                val cell=row.getChildAt(j) as TextView
+
+                cell.text=alarmSetter.timeTable[i-2][j-1].toString()
+            }
+        }
+        tableView.show()
     }
 
     @RequiresApi(Build.VERSION_CODES.M)
-    fun alarmSetButtonEvent(topViewTime:Dialog, selectedDay:String, selectedSlot:String)
+    fun alarmSetButtonEvent(topViewTime:Dialog, selectedDay:String, selectedSlot:String) //event handler for set button
     {
         val t=topViewTime.findViewById<View>(R.id.timePicker1) as TimePicker
         println("Hour=${t.hour}")

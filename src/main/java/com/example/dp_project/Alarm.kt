@@ -10,6 +10,7 @@ class Alarm(private var ctx: Context, private val filename: String = "alarmDump.
     private val clock:AlarmClock = AlarmClock()
     var timeTable: Array<IntArray> =Array(7){IntArray(3)}
     private var timeTableDefault: Array<IntArray> =Array(7){IntArray(3)}
+    val hostUrl="http://192.168.43.243/"
 
     private val dayOfWeek: Array<String> =arrayOf("mon","tue","wed","thu","fri","sat","sun")
 
@@ -89,10 +90,10 @@ class Alarm(private var ctx: Context, private val filename: String = "alarmDump.
         req+="}"
         // all network operations must not be done in main thread
         Thread{
-            res=Connectivity.ping("http://192.168.43.243/")
+            res=Connectivity.ping(hostUrl)
             if(res=="Ready")
             {
-                res=Connectivity.send("http://192.168.43.243/get","data",req)
+                res=Connectivity.send(hostUrl,"data",req)
                 println(res) //only for debugging purpose
             }
             else
