@@ -68,7 +68,8 @@ class MainActivity : AppCompatActivity() {
         //status text
         val statusText=findViewById<View>(R.id.statusText) as TextView
         val handler=Handler(Looper.getMainLooper())
-        handler.post {
+        fun statusUpdater()
+        {
             var isConnected=false
             Thread{
                 val status = Connectivity.ping(alarmSetter.hostUrl)
@@ -85,5 +86,7 @@ class MainActivity : AppCompatActivity() {
                 statusText.setTextColor(Color.parseColor("#fc2c03"))
             }
         }
+        statusUpdater()
+        handler.postDelayed( {statusUpdater()},60000)
     }
 }

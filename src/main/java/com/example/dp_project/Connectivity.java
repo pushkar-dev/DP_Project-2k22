@@ -5,8 +5,6 @@ import java.io.IOException;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.FormBody;
-import okhttp3.RequestBody;
 
 public class Connectivity {
     public static String send (String url_esp32,String id,String data) {
