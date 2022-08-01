@@ -76,12 +76,12 @@ class MainActivity : AppCompatActivity() {
             }.start()
             if(isConnected)
             {
-                statusText.text=R.string.connected.toString()
+                statusText.text=getString(R.string.connected)
                 statusText.setTextColor(Color.parseColor("#03fc66"))
             }
             else
             {
-                statusText.text=R.string.disconnected.toString()
+                statusText.text=getString(R.string.disconnected)
                 statusText.setTextColor(Color.parseColor("#fc2c03"))
             }
         }
